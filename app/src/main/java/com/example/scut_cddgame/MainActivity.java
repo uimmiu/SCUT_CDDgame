@@ -44,4 +44,9 @@ public class MainActivity extends AppCompatActivity {
             dialogInterface.cancel();
         }
     };
+
+    //玩家在登录界面点击返回按钮
+    public void btnLoginReturnClicked(){
+        setContentView(R.layout.init_view);
+    }
 }
