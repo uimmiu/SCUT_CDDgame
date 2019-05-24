@@ -16,29 +16,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.init_view);
-        //创建访问账号数据库的进程
-        new Thread(runnable).start();
-    }
-
-    //访问数据库的线程
-    Runnable runnable = new Runnable() {
-        private Connection connection = null;
-
-        @Override
-        public void run() {
-            try {
-                Class.forName("org.mariadb.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://IPAddress:3306/cddgame", "cddgame", "cddgame");
-                System.out.println("数据库连接成功!");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                
-            }
-        }
     }
 
     //玩家在初始界面点击START按钮事件
@@ -83,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //玩家在登录界面点击登录按钮
-    public void btnLoginClicked(View view) throws java.sql.SQLException {
+    public void btnLoginClicked(View view) throws java.sql.SQLException,ClassNotFoundException {
         //得到玩家账号和密码
         EditText editText = findViewById(R.id.txtAccount);
         String accountName = editText.getText().toString();
@@ -123,18 +100,38 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //检查玩家给定的账号密码是否正确
-    private boolean checkAccount(String accountName, String passwd) throws java.sql.SQLException {
+    private boolean checkAccount(String accountName, String passwd) throws java.sql.SQLException,ClassNotFoundException {
+        boolean findAccount = false;
         try {
-            // TODO: 19-5-24 check account
-        } catch (Exception exc) {
+            Class.forName("org.mariadb.jdbc.Driver"); //如果本机安装的是mysql，把mariadb改成mysql即可，下同
+            Connection connection = DriverManager.getConnection("jdbc:mariadb://IPAddress:3306/cddgame", "cddgame", "cddgame");
+            String sql = "select * from account";
+            Statement stmt = connection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(sql);
+            while (resultSet.next()) {
+                String currAccountName=resultSet.getString("accountName");
+                String currPassword=resultSet.getString("password");
+                if (currAccountName==accountName && currPassword==passwd){
+                    findAccount=true;
+                    break;
+                }
+            }
+
+        } catch (SQLException exc) {
             return false;
         }
-        return true;
+        if (!findAccount) return false;
+        else return true;
     }
 
-    //玩家点击注册按钮事件
+    //玩家在登录界面点击注册按钮事件
     public void btnRegistClicked(View view) {
         setContentView(R.layout.regist_view);
+    }
+
+    //玩家在注册账号页面点击注册按钮事件
+    public void btnRegistRegistClicked(View view) {
+        // TODO: 19-5-24
     }
 
     //玩家在注册账号页面点击返回按钮事件

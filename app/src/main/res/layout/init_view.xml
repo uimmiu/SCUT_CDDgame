@@ -12,9 +12,11 @@
         android:layout_height="46dp"
         android:layout_marginStart="239dp"
         android:layout_marginTop="104dp"
+        android:layout_marginEnd="239dp"
         android:fontFamily="@font/ubuntu_mono"
         android:text="Chu Da Di game"
         android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
