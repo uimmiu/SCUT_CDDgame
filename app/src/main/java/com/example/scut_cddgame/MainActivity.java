@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //玩家在登录界面点击返回按钮
-    public void btnLoginReturnClicked(){
+    public void btnLoginReturnClicked(View view){
         setContentView(R.layout.init_view);
     }
 }
