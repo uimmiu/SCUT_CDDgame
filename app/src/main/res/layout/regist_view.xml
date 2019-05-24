@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/txtRegistAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="208dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtvRegistAccountName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/txtRegistPasswd1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="209dp"
+            android:layout_marginBottom="56dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/txtRegistPasswd2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtvRegistPasswd"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegistAccountName" />
+
+        <EditText
+            android:id="@+id/txtRegistPasswd2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="208dp"
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegistReturn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtvRegistPasswd2" />
+
+        <Button
+            android:id="@+id/btnRegistRegist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="52dp"
+            android:text="regist"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnRegistReturn"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnRegistReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="235dp"
+            android:layout_marginBottom="52dp"
+            android:onClick="btnRegistReturnClicked"
+            android:text="return"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnRegistRegist" />
+
+        <TextView
+            android:id="@+id/txtvRegistAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="192dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="60dp"
+            android:text="Account Name"
+            app:layout_constraintBottom_toTopOf="@+id/txtvRegistPasswd"
+            app:layout_constraintEnd_toStartOf="@+id/txtRegistAccountName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtvRegistPasswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="226dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="22dp"
+            android:text="Password"
+            app:layout_constraintEnd_toStartOf="@+id/txtRegistPasswd1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvRegistAccountName" />
+
+        <TextView
+            android:id="@+id/txtvRegistPasswd2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="185dp"
+            android:layout_marginTop="63dp"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="10dp"
+            android:text="Password again"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegistRegist"
+            app:layout_constraintEnd_toStartOf="@+id/txtRegistPasswd2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtvRegistPasswd"
+            app:layout_constraintVertical_bias="0.068" />
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

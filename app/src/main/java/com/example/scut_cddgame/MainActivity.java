@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
         }
 
-        //todo
+        //check account todo
+
+        //start game todo
     }
 
     //玩家输入用户名或密码为空时，弹出对话框的按钮动作
@@ -85,4 +87,14 @@ public class MainActivity extends AppCompatActivity {
             dialogInterface.cancel();
         }
     };
+
+    //玩家点击注册按钮事件
+    public void btnRegistClicked(View view){
+        setContentView(R.layout.regist_view);
+    }
+
+    //玩家在注册账号页面点击返回按钮事件
+    public void btnRegistReturnClicked(View view){
+        setContentView(R.layout.login_view);
+    }
 }
