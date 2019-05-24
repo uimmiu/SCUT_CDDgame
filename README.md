@@ -10,7 +10,7 @@ Kernel version: x86_64 Linux 5.0.15-1-MANJARO
 IDE: Android Studio 3.4.1.0-1  
 
 ## More
-If you are interested in more details about this project, please visit [my blog](www.cnblogs.com/JHSeng) (in Simplified Chinese).
+If you are interested in more details about this project, please visit [my blog](https://www.cnblogs.com/JHSeng) (in Simplified Chinese).
 
 ## Author
 JHSeng on 2019.05.24
