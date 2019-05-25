@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,11 +12,32 @@ import java.sql.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    //静态参数
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
+    public static double SCALE_VERTICAL;
+    public static double SCALE_HORIAONTAL;
+
     //MainActivity的入口
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.init_view);
+
+        //获取屏幕长宽
+        DisplayMetrics displayMetrics=new DisplayMetrics();
+        this.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        SCREEN_WIDTH=displayMetrics.widthPixels;
+        SCREEN_HEIGHT=displayMetrics.heightPixels;
+        if (SCREEN_HEIGHT>SCREEN_WIDTH){
+            int tmp=SCREEN_HEIGHT;
+            SCREEN_HEIGHT=SCREEN_WIDTH;
+            SCREEN_WIDTH=tmp;
+        }
+        SCALE_VERTICAL=SCREEN_HEIGHT/320.0;
+        SCALE_HORIAONTAL=SCREEN_WIDTH/480.0;
+
+        //
     }
 
     //玩家在初始界面点击START按钮事件
@@ -100,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //检查玩家给定的账号密码是否正确
+    //目前用mariadb都是假的，Android平台数据库应该用的是sqlite
     private boolean checkAccount(String accountName, String passwd) throws java.sql.SQLException,ClassNotFoundException {
         boolean findAccount = false;
         try {
@@ -142,5 +165,21 @@ public class MainActivity extends AppCompatActivity {
     //玩家在设置页面点击返回按钮事件
     public void btnSettingsReturnClicked(View view) {
         setContentView(R.layout.init_view);
+    }
+
+    //给三个玩家发牌
+    private void drawCards(){
+        // TODO: 19-5-25
+    }
+
+    //判断玩家打出的牌是否合法
+    private boolean isLegelAction(){
+        // TODO: 19-5-25
+        return true;
+    }
+
+    //计算玩家分数
+    private void calculateScore(){
+        // TODO: 19-5-25
     }
 }
