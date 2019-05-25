@@ -116,10 +116,10 @@ public class CardsManager {
                 return CardsType.ZaShun;
             if ((getCardNumber(cards[0]) == getCardNumber(cards[1])
                     && getCardNumber(cards[2]) == getCardNumber(cards[4]))
-                || (getCardNumber(cards[0]) == getCardNumber(cards[2])
+                    || (getCardNumber(cards[0]) == getCardNumber(cards[2])
                     && getCardNumber(cards[3]) == getCardNumber(cards[4])))
                 return CardsType.HuLu;
-            if(getCardNumber(cards[0]) == getCardNumber(cards[3])
+            if (getCardNumber(cards[0]) == getCardNumber(cards[3])
                     || getCardNumber(cards[1]) == getCardNumber(cards[4]))
                 return CardsType.JinGang;
         }
@@ -127,30 +127,30 @@ public class CardsManager {
     }
 
     //返回的int包含花色和数值
-    public static int getValue(int[] cards){
-        int type=getType(cards);
-        if (type==CardsType.DanZhang || type==CardsType.Dui || type==CardsType.SanGe)
+    public static int getValue(int[] cards) {
+        int type = getType(cards);
+        if (type == CardsType.DanZhang || type == CardsType.Dui || type == CardsType.SanGe)
             return cards[0];
         //特判2或A开头做顺子的情况
-        if (type==CardsType.ZaShun || type==CardsType.TongHuaShun){
-            if (getCardNumber(cards[0])==15){
-                if (getCardNumber(cards[1])==14)
+        if (type == CardsType.ZaShun || type == CardsType.TongHuaShun) {
+            if (getCardNumber(cards[0]) == 15) {
+                if (getCardNumber(cards[1]) == 14)
                     return cards[2];
                 else
                     return cards[1];
-            }else
+            } else
                 return cards[0];
         }
-        if (type==CardsType.TongHua)
+        if (type == CardsType.TongHua)
             return cards[0];
-        if (type==CardsType.SanGe){
-            if (getCardNumber(cards[0])==getCardNumber(cards[2]))
+        if (type == CardsType.SanGe) {
+            if (getCardNumber(cards[0]) == getCardNumber(cards[2]))
                 return cards[2];
             else
                 return cards[4];
         }
-        if (type==CardsType.JinGang){
-            if (getCardNumber(cards[0])==getCardNumber(cards[3]))
+        if (type == CardsType.JinGang) {
+            if (getCardNumber(cards[0]) == getCardNumber(cards[3]))
                 return cards[3];
             else
                 return cards[4];
@@ -159,12 +159,28 @@ public class CardsManager {
     }
 
     //判断牌型是否合法
-    public static boolean isLegel(int[] cards){
-        if (getType(cards)!=CardsType.error)
+    public static boolean isLegel(int[] cards) {
+        if (getType(cards) != CardsType.error)
             return true;
         return false;
     }
-    
+
     //判断哪手牌大
-    // TODO: 19-5-25 写完CardHolder再继续写 
+    public static int compare(CardsHolder f, CardsHolder s) {
+        if (f.cards.length != s.cards.length)
+            return -1;
+        if (getCardNumber(f.value) > getCardNumber(s.value))
+            return 1;
+        if (getCardNumber(f.value) == getCardNumber(s.value)) {
+            if (getImageCol(f.value) < getImageCol(s.value))
+                return 1;
+            if (getImageCol(f.value) > getImageCol(s.value))
+                return 0;
+        }
+        if (getCardNumber(f.value) < getCardNumber(s.value))
+            return 0;
+        return -1;
+    }
+
+    // TODO: 19-5-25 写完player类再继续写
 }
