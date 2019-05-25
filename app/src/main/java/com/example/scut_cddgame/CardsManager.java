@@ -182,5 +182,7 @@ public class CardsManager {
         return -1;
     }
 
-    // TODO: 19-5-25 写完player类再继续写
+    public static int[] outCardByItself(int cards[],Player last,Player next){
+        // TODO: 19-5-25 写完CardAnalyzer类再继续写
+    }
 }
