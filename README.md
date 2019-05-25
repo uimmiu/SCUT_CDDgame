@@ -18,7 +18,7 @@ Gradle version: 3.4.1
 Android 5.0 (or above)
 
 ## More
-If you are interested in more details about this project, please visit [my blog](https://www.cnblogs.com/JHSeng) (in Simplified Chinese).
+If you are interested in more details about this project, please visit [my blog](https://www.cnblogs.com/JHSeng/p/10924524.html) (in Simplified Chinese).
 
 ## Author
 JHSeng on 2019.05.24
