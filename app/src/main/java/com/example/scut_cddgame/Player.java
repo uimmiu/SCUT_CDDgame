@@ -135,6 +135,6 @@ public class Player {
         if (card == null)  //随意出牌
             pokeWanted=CardsManager.outCardByItself(cards,last,next);
         else
-            pokeWanted=CardsManager.
+            pokeWanted=CardsManager.findTheRightCard(card,cards,last,next);
     }
 }

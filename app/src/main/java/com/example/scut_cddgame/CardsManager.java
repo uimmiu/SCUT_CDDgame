@@ -327,6 +327,6 @@ public class CardsManager {
                 }
                 break;
         }
-        return cardPokes;
+        return null;
     }
 }
