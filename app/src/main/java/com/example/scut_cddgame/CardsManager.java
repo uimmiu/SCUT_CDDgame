@@ -2,6 +2,7 @@ package com.example.scut_cddgame;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Vector;
 
 public class CardsManager {
     public static Random rand = new Random();
@@ -182,7 +183,54 @@ public class CardsManager {
         return -1;
     }
 
-    public static int[] outCardByItself(int cards[],Player last,Player next){
-        // TODO: 19-5-25 写完CardAnalyzer类再继续写
+    public static int[] outCardByItself(int cards[], Player last, Player next) {
+        CardsAnalyzer analyzer = CardsAnalyzer.getInstance();
+        analyzer.setPokes(cards);
+        Vector<int[]> cardDanZhang = analyzer.getCardDanZhang();
+        if (cardDanZhang.size() > 0)
+            return cardDanZhang.elementAt(0);
+        return new int[]{cards[0]};
+    }
+
+    public static int[] findBigerCards(CardsHolder card, int cards[]) {
+        try {
+            //获取card的信息，牌值，牌型
+            int[] cardPokes = card.cards;
+            //cardValue包含值和花色
+            int cardValue = card.value, cardType = card.cardsType, cardLength = cardPokes.length, size = 0;
+            CardsAnalyzer analyzer = CardsAnalyzer.getInstance();
+            analyzer.setPokes(cards);
+            Vector<int[]> tmp;
+            switch (cardType) {
+                case CardsType.DanZhang:
+                    tmp = analyzer.getCardDanZhang();
+                    size = tmp.size();
+                    for (int i = 0; i < size; i++) {
+                        int[] cardArray = tmp.get(i);
+                        int v = CardsManager.getCardNumber(cardArray[0]), h = CardsManager.getImageCol(cardArray[0]);
+                        if (v > getCardNumber(cardValue))
+                            return cardArray;
+                        if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                            return cardArray;
+                    }
+                    break;
+                case CardsType.Dui:
+                    tmp = analyzer.getCardDui();
+                    size = tmp.size();
+                    for (int i = 0; i < size; i++) {
+                        int[] cardArray = tmp.get(i);
+                        int v = CardsManager.getCardNumber(cardArray[1]), h = CardsManager.getImageCol(cardArray[1]);
+                        if (v > getCardNumber(cardValue))
+                            return cardArray;
+                        if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                            return cardArray;
+                    }
+                    break;
+                case CardsType.SanGe:
+                    tmp=analyzer.getCardSange();
+                    size=tmp.size();
+                    
+            }
+        }
     }
 }

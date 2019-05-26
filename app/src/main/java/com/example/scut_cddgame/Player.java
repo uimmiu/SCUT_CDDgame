@@ -132,8 +132,9 @@ public class Player {
     //电脑出牌AI
     public CardsHolder chupaiAI(CardsHolder card) {
         int[] pokeWanted = null;
-        if (card == null) { //随意出牌
-            pokeWanted=CardsManager.
-        }
+        if (card == null)  //随意出牌
+            pokeWanted=CardsManager.outCardByItself(cards,last,next);
+        else
+            pokeWanted=CardsManager
     }
 }
