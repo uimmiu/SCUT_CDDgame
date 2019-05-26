@@ -193,44 +193,133 @@ public class CardsManager {
     }
 
     public static int[] findBigerCards(CardsHolder card, int cards[]) {
-        try {
-            //获取card的信息，牌值，牌型
-            int[] cardPokes = card.cards;
-            //cardValue包含值和花色
-            int cardValue = card.value, cardType = card.cardsType, cardLength = cardPokes.length, size = 0;
-            CardsAnalyzer analyzer = CardsAnalyzer.getInstance();
-            analyzer.setPokes(cards);
-            Vector<int[]> tmp;
-            switch (cardType) {
-                case CardsType.DanZhang:
-                    tmp = analyzer.getCardDanZhang();
-                    size = tmp.size();
-                    for (int i = 0; i < size; i++) {
-                        int[] cardArray = tmp.get(i);
-                        int v = CardsManager.getCardNumber(cardArray[0]), h = CardsManager.getImageCol(cardArray[0]);
-                        if (v > getCardNumber(cardValue))
-                            return cardArray;
-                        if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
-                            return cardArray;
+        //获取card的信息，牌值，牌型
+        int[] cardPokes = card.cards;
+        //cardValue包含值和花色
+        int cardValue = card.value, cardType = card.cardsType, cardLength = cardPokes.length, size = 0;
+        CardsAnalyzer analyzer = CardsAnalyzer.getInstance();
+        analyzer.setPokes(cards);
+        Vector<int[]> tmp;
+        switch (cardType) {
+            case CardsType.DanZhang:
+                tmp = analyzer.getCardDanZhang();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(cardArray[0]), h = CardsManager.getImageCol(cardArray[0]);
+                    if (v > getCardNumber(cardValue))
+                        return cardArray;
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                        return cardArray;
+                }
+                break;
+            case CardsType.Dui:
+                tmp = analyzer.getCardDui();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(cardArray[1]), h = CardsManager.getImageCol(cardArray[1]);
+                    if (v > getCardNumber(cardValue))
+                        return cardArray;
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                        return cardArray;
+                }
+                break;
+            case CardsType.SanGe:
+                tmp = analyzer.getCardSange();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(cardArray[0]), h = CardsManager.getImageCol(cardArray[2]);
+                    if (v > getCardNumber(cardValue))
+                        return cardArray;
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                        return cardArray;
+                }
+                break;
+            case CardsType.ZaShun:
+            case CardsType.TongHuaShun:
+            case CardsType.TongHua:
+                tmp = analyzer.getCardZaShun();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(CardsManager.getValue(cardArray)), h = CardsManager.getImageCol(CardsManager.getValue(cardArray));
+                    if (v > getCardNumber(cardValue))
+                        return cardArray;
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
+                        return cardArray;
+                }
+                break;
+            case CardsType.JinGang:
+                if (cards.length < 5) break;
+                tmp = analyzer.getCardJinGang();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(cardArray[3]), h = CardsManager.getImageCol(cardArray[3]);
+                    if (v > getCardNumber(cardValue)) {
+                        int[] jinGang = new int[5];
+                        for (int j = 0; j < cardArray.length; j++)
+                            jinGang[j] = cardArray[j];
+                        tmp = analyzer.getCardDanZhang();
+                        size = tmp.size();
+                        if (size > 0) {
+                            int[] t = tmp.get(0);
+                            jinGang[4] = t[0];
+                            return jinGang;
+                        }
                     }
-                    break;
-                case CardsType.Dui:
-                    tmp = analyzer.getCardDui();
-                    size = tmp.size();
-                    for (int i = 0; i < size; i++) {
-                        int[] cardArray = tmp.get(i);
-                        int v = CardsManager.getCardNumber(cardArray[1]), h = CardsManager.getImageCol(cardArray[1]);
-                        if (v > getCardNumber(cardValue))
-                            return cardArray;
-                        if (v == getCardNumber(cardValue) && h < getImageCol(cardValue))
-                            return cardArray;
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue)) {
+                        int[] jinGang = new int[5];
+                        for (int j = 0; j < cardArray.length; j++)
+                            jinGang[j] = cardArray[j];
+                        tmp = analyzer.getCardDanZhang();
+                        size = tmp.size();
+                        if (size > 0) {
+                            int[] t = tmp.get(0);
+                            jinGang[4] = t[0];
+                            return jinGang;
+                        }
                     }
-                    break;
-                case CardsType.SanGe:
-                    tmp=analyzer.getCardSange();
-                    size=tmp.size();
-                    
-            }
+
+                }
+                break;
+            case CardsType.HuLu:
+                if (cards.length < 5) break;
+                tmp = analyzer.getCardHuLu();
+                size = tmp.size();
+                for (int i = 0; i < size; i++) {
+                    int[] cardArray = tmp.get(i);
+                    int v = CardsManager.getCardNumber(cardArray[2]);
+                    int h = CardsManager.getImageCol(cardArray[2]);
+                    if (v > getCardNumber(cardValue)) {
+                        int[] huLu = new int[5];
+                        for (int j = 0; j < cardArray.length; j++)
+                            huLu[j] = cardArray[j];
+                        tmp = analyzer.getCardHuLu();
+                        size = tmp.size();
+                        if (size > 0) {
+                            int[] t = tmp.get(0);
+                            huLu[4] = t[0];
+                            return huLu;
+                        }
+                    }
+                    if (v == getCardNumber(cardValue) && h < getImageCol(cardValue)) {
+                        int[] huLu = new int[5];
+                        for (int j = 0; j < cardArray.length; j++)
+                            huLu[j] = cardArray[j];
+                        tmp = analyzer.getCardDanZhang();
+                        size = tmp.size();
+                        if (size > 0) {
+                            int[] t = tmp.get(0);
+                            huLu[4] = t[0];
+                            return huLu;
+                        }
+                    }
+                }
+                break;
         }
+        return cardPokes;
     }
 }
