@@ -1,6 +1,7 @@
 package com.example.scut_cddgame;
 
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,14 @@ public class MainActivity extends AppCompatActivity {
     public static int SCREEN_HEIGHT;
     public static double SCALE_VERTICAL;
     public static double SCALE_HORIAONTAL;
+    public static Handler handler;
+
+    //静态常量
+    public final static int GAME = 1;
+    public final static int EXIT = 2;
+    public final static int SMALL_CARD = 3;
+    public final static int WRONG_CARD = 4;
+    public final static int EMPTY_CARD = 5;
 
     //MainActivity的入口
     @Override

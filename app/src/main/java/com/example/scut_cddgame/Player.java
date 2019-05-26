@@ -1,5 +1,6 @@
 package com.example.scut_cddgame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,8 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+
+import javax.crypto.spec.DESKeySpec;
 
 public class Player {
     int[] cards; //玩家手里的牌
@@ -133,8 +136,114 @@ public class Player {
     public CardsHolder chupaiAI(CardsHolder card) {
         int[] pokeWanted = null;
         if (card == null)  //随意出牌
-            pokeWanted=CardsManager.outCardByItself(cards,last,next);
+            pokeWanted = CardsManager.outCardByItself(cards, last, next);
         else
-            pokeWanted=CardsManager.findTheRightCard(card,cards,last,next);
+            pokeWanted = CardsManager.findTheRightCard(card, cards, last, next);
+        if (pokeWanted == null)
+            return null;
+        //出牌后把牌从玩家手里剔除
+        for (int i = 0; i < pokeWanted.length; i++) {
+            for (int j = 0; j < cards.length; j++)
+                if (cards[j] == pokeWanted[i]) {
+                    cards[j] = -1;
+                    break;
+                }
+        }
+        int[] newpokes = new int[0];
+        if (cards.length - pokeWanted.length > 0)
+            newpokes = new int[cards.length - pokeWanted.length];
+        int j = 0;
+        for (int i = 0; i < cards.length; i++)
+            if (cards[i] != -1)
+                newpokes[j++] = cards[i];
+        this.cards = newpokes;
+        CardsHolder thisCard = new CardsHolder(pokeWanted, playerID, context);
+        Desk.cardsOnDesktop = thisCard;
+        this.latestCards = thisCard;
+        return thisCard;
+    }
+
+    //玩家出牌
+    @SuppressLint("ShowToast")
+    public CardsHolder chuPai(CardsHolder card) {
+        int cnt = 0;
+        for (int i = 0; i < cards.length; i++)
+            if (cardsFlag[i]) cnt++;
+        int[] chupaiPokes = new int[cnt];
+        int j = 0;
+        for (int i = 0; i < cards.length; i++)
+            if (cardsFlag[i])
+                chupaiPokes[j++] = cards[i];
+        int cardType = CardsManager.getType(chupaiPokes);
+        if (cardType == CardsType.error) {
+            if (chupaiPokes.length != 0)
+                MainActivity.handler.sendEmptyMessage(MainActivity.WRONG_CARD);
+            else MainActivity.handler.sendEmptyMessage(MainActivity.EMPTY_CARD);
+            return null;
+        }
+        CardsHolder newLatestCardsHolder = new CardsHolder(chupaiPokes, playerID, context);
+        if (card == null) {
+            Desk.cardsOnDesktop = newLatestCardsHolder;
+            this.latestCards = newLatestCardsHolder;
+            int[] newPokes = new int[cards.length - cnt];
+            int k = 0;
+            for (int i = 0; i < cards.length; i++)
+                if (!cardsFlag[i])
+                    newPokes[k++] = cards[i];
+            this.cards = newPokes;
+            this.cardsFlag = new boolean[cards.length];
+        } else {
+            if (CardsManager.compare(newLatestCardsHolder, card) == 1) {
+                Desk.cardsOnDesktop = newLatestCardsHolder;
+                this.latestCards = newLatestCardsHolder;
+                int[] newPokes = new int[cards.length - cnt];
+                int j = 0;
+                for (int i = 0; i < cards.length; i++)
+                    if (!cardsFlag[i])
+                        newPokes[j++] = cards[i];
+                this.cards = newPokes;
+                this.cardsFlag = new boolean[cards.length];
+            }
+            if (CardsManager.compare(newLatestCardsHolder, card) == 0) {
+                MainActivity.handler.sendEmptyMessage(MainActivity.SMALL_CARD);
+                return null;
+            }
+            if (CardsManager.compare(newLatestCardsHolder, card) == -1) {
+                MainActivity.handler.sendEmptyMessage(MainActivity.WRONG_CARD);
+                return null;
+            }
+        }
+        return newLatestCardsHolder;
+    }
+
+    //当玩家操作时，触摸屏事件处理
+    public void onTouch(int x,int y){
+        for(int i=0;i<cards.length;i++){
+            if (i != cards.length - 1) {
+                if (CardsManager.inRect(x, y,
+                        (int) ((left + i * 20) * MainActivity.SCALE_HORIAONTAL),
+                        (int) ((top - (cardsFlag[i] ? 10 : 0)) * MainActivity.SCALE_VERTICAL),
+                        (int) (20 * MainActivity.SCALE_HORIAONTAL),
+                        (int) (60 * MainActivity.SCALE_VERTICAL))) {
+                    cardsFlag[i] = !cardsFlag[i];
+                    break;
+                }
+            }else{
+                if (CardsManager.inRect(x, y,
+                        (int) ((left + i * 20) * MainActivity.SCALE_HORIAONTAL),
+                        (int) ((top - (cardsFlag[i] ? 10 : 0)) * MainActivity.SCALE_VERTICAL),
+                        (int) (40 * MainActivity.SCALE_HORIAONTAL),
+                        (int) (60 * MainActivity.SCALE_VERTICAL))) {
+                    cardsFlag[i] = !cardsFlag[i];
+                    break;
+                }
+            }
+        }
+    }
+
+    //unfinished
+    public void redo(){
+        for (int i=0;i<cardsFlag.length;i++)
+            cardsFlag[i]=false;
     }
 }

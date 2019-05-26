@@ -7,7 +7,7 @@ import java.util.Vector;
 public class CardsManager {
     public static Random rand = new Random();
 
-    public static boolean inReat(int x, int y, int rectX, int rectY, int rectW, int rectH) {
+    public static boolean inRect(int x, int y, int rectX, int rectY, int rectW, int rectH) {
         if (x <= rectX || x >= rectX + rectW || y <= rectY || y >= rectY + rectH)
             return false;
         else
