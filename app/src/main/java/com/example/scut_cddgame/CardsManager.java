@@ -192,6 +192,13 @@ public class CardsManager {
         return new int[]{cards[0]};
     }
 
+    //智能出牌
+    public static int[] findTheRightCard(CardsHolder card,int cards[],Player last,Player next){
+        CardsAnalyzer cardsAnalyzer=CardsAnalyzer.getInstance();
+        cardsAnalyzer.setPokes(cards);
+        return findBigerCards(card,cards);
+    }
+
     public static int[] findBigerCards(CardsHolder card, int cards[]) {
         //获取card的信息，牌值，牌型
         int[] cardPokes = card.cards;
