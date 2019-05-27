@@ -99,5 +99,6 @@ public class Menu extends SurfaceView implements SurfaceHolder.Callback, View.On
         for (int i=0;i<menuItems.length;i++){
             // TODO: 19-5-25
         }
+        return false; //临时写的
     }
 }

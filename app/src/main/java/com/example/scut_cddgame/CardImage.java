@@ -1,7 +1,7 @@
 package com.example.scut_cddgame;
 
 public interface CardImage {
-    int[][] cardImages = {
+    int[][] cardImages = { //这些资源交给前端
             {R.drawable.spade_3, R.drawable.heart_3, R.drawable.club_3, R.drawable.diamond_3},
             {R.drawable.spade_4, R.drawable.heart_4, R.drawable.club_4, R.drawable.diamond_4},
             {R.drawable.spade_5, R.drawable.heart_5, R.drawable.club_5, R.drawable.diamond_5},
