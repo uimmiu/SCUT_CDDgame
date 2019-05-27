@@ -15,6 +15,8 @@ public class CardsAnalyzer {
     private Vector<int[]> cardJinGang = new Vector<int[]>(4);
     private Vector<int[]> cardHuLu = new Vector<int[]>(4);
 
+    private CardsAnalyzer(){}
+
     public int[] getCountPokes() {
         return countCards;
     }
@@ -54,8 +56,6 @@ public class CardsAnalyzer {
     public Vector<int[]> getCardHuLu() {
         return cardHuLu;
     }
-
-    private CardsAnalyzer{}
 
     public static CardsAnalyzer getInstance(){
         return new CardsAnalyzer();
@@ -116,5 +116,8 @@ public class CardsAnalyzer {
         if (Desk.boss==next.playerID || (Desk.boss!=next.playerID && Desk.boss != last.playerID)){
             //这里的功能估计没做完
         }
+        return null; //随便加的
     }
+
+    private void analyze(){} //随便加的
 }

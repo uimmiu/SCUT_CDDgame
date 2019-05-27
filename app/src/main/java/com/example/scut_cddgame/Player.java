@@ -197,7 +197,6 @@ public class Player {
                 Desk.cardsOnDesktop = newLatestCardsHolder;
                 this.latestCards = newLatestCardsHolder;
                 int[] newPokes = new int[cards.length - cnt];
-                int j = 0;
                 for (int i = 0; i < cards.length; i++)
                     if (!cardsFlag[i])
                         newPokes[j++] = cards[i];
